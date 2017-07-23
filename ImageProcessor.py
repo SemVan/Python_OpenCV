@@ -41,8 +41,11 @@ class ImageProcessor:
         image, contours, hierarchy = cv2.findContours(skinRegion, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for i, c in enumerate(contours):
             area = cv2.contourArea(c)
-            if area > 1000:
+            if area > 2000:
                 cv2.drawContours(face, contours, i, (0, 255, 0), 3)
+                masked_img = face.copy()
+                cv2.fillPoly(face, contours, [0, 0, 0])
+                face = masked_img - face
 
         return face
                 
